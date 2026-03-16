@@ -2,7 +2,7 @@
 <html lang="pt">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Soluções Diferentes – Telecomunicações & Energia</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
@@ -88,13 +88,11 @@
     content:''; position:absolute; inset:0;
     background:linear-gradient(
       105deg,
-      rgba(11,30,61,.85) 0%,
-      rgba(11,30,61,.55) 50%,
-      rgba(0,0,0,.2) 100%
+      rgba(11,30,61,.88) 0%,
+      rgba(11,30,61,.6) 50%,
+      rgba(0,0,0,.25) 100%
     );
   }
-
-  /* slide backgrounds */
   .slide-1 { background-image:url('https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1800&auto=format&fit=crop'); }
   .slide-2 { background-image:url('https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1800&auto=format&fit=crop'); }
   .slide-3 { background-image:url('https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=1800&auto=format&fit=crop'); }
@@ -159,7 +157,7 @@
   }
   .dot {
     width:8px; height:8px; border-radius:4px; background:rgba(255,255,255,.35);
-    cursor:pointer; transition:all .4s;
+    cursor:pointer; transition:all .4s; min-width:8px;
   }
   .dot.active { width:28px; background:var(--gold); }
   .slide-arrows {
@@ -205,6 +203,7 @@
     background:var(--white); color:var(--accent);
     padding:9px 22px; border-radius:6px;
     font-weight:700; font-size:.83rem; text-decoration:none; transition:all .2s;
+    white-space:nowrap; flex-shrink:0;
   }
   .recruit a:hover { background:var(--navy); color:var(--white); }
 
@@ -385,26 +384,288 @@
   .wa-float:hover { transform:scale(1.1); box-shadow:0 10px 32px rgba(37,211,102,.55); }
   .wa-float svg { width:27px; height:27px; }
 
+  /* ─── HAMBURGER ─── */
+  .hamburger {
+    display:none; flex-direction:column; justify-content:center;
+    gap:5px; width:44px; height:44px; cursor:pointer;
+    background:none; border:none; padding:6px;
+  }
+  .hamburger span {
+    display:block; height:2px; border-radius:2px;
+    background:var(--navy); transition:all .3s;
+  }
+  .hamburger.open span:nth-child(1) { transform:translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity:0; }
+  .hamburger.open span:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
+
   /* ─── ANIMATIONS ─── */
   @keyframes fadeUp { from { opacity:0; transform:translateY(22px); } to { opacity:1; transform:translateY(0); } }
   .reveal { opacity:0; transform:translateY(28px); transition:opacity .6s ease, transform .6s ease; }
   .reveal.visible { opacity:1; transform:translateY(0); }
 
-  /* ─── MOBILE ─── */
-  @media (max-width:900px) {
-    nav { padding:0 16px; }
-    .nav-links { display:none; }
-    .hero-content { padding:0 24px; }
+  /* ══════════════════════════════════════════
+     MOBILE RESPONSIVENESS – IMPROVED
+  ══════════════════════════════════════════ */
+
+  /* ── Tablet ── */
+  @media (max-width:1024px) {
+    nav { padding:0 24px; }
+    .hero-content { padding:0 48px; }
+    .slide-dots { left:48px; }
+    section { padding:72px 32px; }
+    .footer-grid { grid-template-columns:1fr 1fr; gap:36px; }
+    .svc-grid { grid-template-columns:repeat(2,1fr); }
+    .mvv-grid { gap:20px; }
+    .cta-band { padding:56px 48px; }
+    footer { padding:56px 32px 32px; }
+  }
+
+  /* ── Mobile ── */
+  @media (max-width:768px) {
+
+    /* TOPBAR */
+    .topbar {
+      padding:8px 16px;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .topbar-email,
+    .topbar-contactos { display:none; }
+    .wa-pill {
+      font-size:.78rem;
+      padding:5px 14px;
+    }
+    .social-icons { gap:6px; }
+    .soc { width:28px; height:28px; }
+    .soc svg { width:13px; height:13px; }
+
+    /* NAV */
+    nav {
+      padding:0 16px;
+      height:62px;
+      position:sticky;
+    }
+    .nav-logo img { height:40px; width:40px; }
+    .nav-logo-text { font-size:.95rem; }
+    .nav-logo-text span { font-size:.62rem; }
+
+    .hamburger { display:flex; }
+
+    /* Mobile drawer */
+    .nav-links {
+      display:flex !important;
+      flex-direction:column;
+      position:fixed;
+      top:0; right:-100%;
+      width:min(80vw, 300px);
+      height:100dvh;
+      background:var(--white);
+      box-shadow:-6px 0 40px rgba(0,0,0,.18);
+      padding:76px 28px 40px;
+      gap:0;
+      transition:right .35s cubic-bezier(.4,0,.2,1);
+      z-index:300;
+      overflow-y:auto;
+      overscroll-behavior:contain;
+    }
+    .nav-links.open { right:0; }
+    .nav-links li { border-bottom:1px solid rgba(0,0,0,.06); }
+    .nav-links a {
+      display:flex; align-items:center;
+      padding:15px 0;
+      font-size:.97rem; font-weight:500;
+      min-height:52px;
+    }
+    .nav-links li:last-child { border-bottom:none; padding-top:16px; }
+    .btn-crm {
+      display:flex; justify-content:center;
+      padding:14px 20px; font-size:.9rem !important;
+      border-radius:8px;
+    }
+
+    .nav-overlay {
+      display:none; position:fixed; inset:0;
+      background:rgba(0,0,0,.45); z-index:299;
+      backdrop-filter:blur(2px);
+    }
+    .nav-overlay.show { display:block; }
+
+    /* HERO */
+    .hero { height:100svh; min-height:520px; }
+    .hero-content {
+      padding:80px 20px 100px;
+      max-width:100%; justify-content:flex-end;
+    }
+    .hero-tag {
+      font-size:.68rem; padding:5px 12px; margin-bottom:18px;
+      letter-spacing:1.2px;
+    }
+    .slide-title {
+      font-size:clamp(1.65rem,6.5vw,2.4rem);
+      letter-spacing:-.5px; margin-bottom:14px;
+    }
+    .hero-sub {
+      font-size:.88rem; margin-bottom:24px; line-height:1.65;
+      max-width:100%;
+    }
+    .hero-ctas { gap:10px; }
+    .btn-primary, .btn-outline {
+      padding:12px 20px; font-size:.85rem;
+      border-radius:8px;
+    }
     .hero-stats { display:none; }
-    .slide-dots { left:24px; bottom:20px; }
-    .slide-arrows { right:20px; bottom:14px; }
-    section { padding:56px 20px; }
-    .mvv-grid, .svc-grid { grid-template-columns:1fr; }
-    .footer-grid { grid-template-columns:1fr 1fr; }
-    .cta-band { flex-direction:column; padding:52px 24px; text-align:center; }
-    .recruit { flex-direction:column; gap:14px; padding:18px 20px; text-align:center; }
-    .gallery-strip { height:200px; }
-    .topbar { padding:7px 16px; font-size:.7rem; }
+
+    /* Mobile stats bar - simplified */
+    .hero-stats-mobile {
+      display:flex !important;
+      position:relative; z-index:15;
+      background:var(--navy);
+      border-top:1px solid rgba(255,255,255,.08);
+      overflow-x:auto;
+      scrollbar-width:none;
+    }
+    .hero-stats-mobile::-webkit-scrollbar { display:none; }
+    .hero-stats-mobile .stat {
+      padding:14px 20px; min-width:130px; flex-shrink:0;
+    }
+    .hero-stats-mobile .stat-num { font-size:1.4rem; }
+    .hero-stats-mobile .stat-lbl { font-size:.68rem; }
+
+    .slide-dots { left:20px; bottom:20px; }
+    .slide-arrows { right:16px; bottom:14px; }
+    .arrow { width:40px; height:40px; font-size:1rem; }
+    .dot { width:7px; height:7px; }
+    .dot.active { width:22px; }
+
+    /* RECRUIT */
+    .recruit {
+      flex-direction:column; gap:12px;
+      padding:18px 16px; text-align:center;
+    }
+    .recruit p { font-size:.85rem; line-height:1.5; }
+    .recruit a {
+      padding:10px 24px; font-size:.85rem;
+      align-self:center;
+    }
+
+    /* SECTIONS */
+    section { padding:52px 20px; }
+    .s-title { font-size:1.65rem; }
+    .s-tag { font-size:.7rem; }
+
+    /* MVV */
+    .mvv-grid {
+      grid-template-columns:1fr;
+      gap:14px; margin-top:32px;
+    }
+    .mvv-card { padding:26px 22px; border-radius:14px; }
+    .mvv-icon { font-size:1.8rem; margin-bottom:14px; }
+    .mvv-card h3 { font-size:1rem; margin-bottom:10px; }
+    .mvv-card p { font-size:.85rem; }
+
+    /* GALLERY STRIP – mobile scroll version */
+    .gallery-strip {
+      height:auto;
+      flex-direction:column;
+      gap:0;
+    }
+    .gallery-strip img {
+      flex:none;
+      width:100%; height:180px;
+      display:block;
+    }
+    /* Keep only first 2 images on mobile */
+    .gallery-strip img:nth-child(n+3) { display:none; }
+
+    /* SERVICES */
+    .svc-grid {
+      grid-template-columns:1fr 1fr;
+      gap:10px; margin-top:32px;
+    }
+    .svc-card { padding:18px 14px; border-radius:12px; gap:8px; }
+    .svc-icon { font-size:1.3rem; }
+    .svc-title { font-size:.82rem; }
+    .svc-desc { font-size:.75rem; line-height:1.5; }
+
+    /* CERTS */
+    .cert { padding:52px 20px; }
+    .cert-row { gap:24px; margin-top:32px; }
+    .cert-badge-icon { width:60px; height:60px; font-size:1.4rem; }
+    .cert-badge span { font-size:.7rem; }
+
+    /* CTA BAND */
+    .cta-band {
+      flex-direction:column; padding:48px 20px;
+      text-align:center; gap:20px;
+    }
+    .cta-band h2 { font-size:1.4rem; max-width:100%; }
+    .cta-band a {
+      padding:14px 28px; font-size:.88rem; align-self:center;
+    }
+
+    /* FOOTER */
+    footer { padding:44px 20px 100px; }
+    .footer-grid {
+      grid-template-columns:1fr;
+      gap:32px; margin-bottom:36px;
+    }
+    .footer-brand p { max-width:100%; font-size:.85rem; }
+    .footer-brand-logo img { height:48px; width:48px; }
+    .footer-brand-name { font-size:1rem; }
+    .f-col { padding-top:0; }
+    .f-col h4 { margin-bottom:14px; }
+    .f-col ul { gap:8px; }
+    .f-col a { font-size:.85rem; padding:2px 0; }
+
+    /* Footer – show 2 cols for empresa & legal */
+    .footer-cols-row {
+      display:grid !important;
+      grid-template-columns:1fr 1fr;
+      gap:28px;
+    }
+
+    .footer-contacts a { min-height:40px; }
+    .crm-btn-footer { width:100%; justify-content:center; padding:14px 18px; }
+
+    .footer-bottom {
+      flex-direction:column; align-items:flex-start; gap:12px;
+      padding-top:20px;
+    }
+    .footer-bottom p { font-size:.75rem; }
+    .f-legal { gap:14px; }
+
+    /* WA FLOAT */
+    .wa-float {
+      bottom:env(safe-area-inset-bottom, 20px);
+      bottom:calc(env(safe-area-inset-bottom, 0px) + 20px);
+      right:16px;
+      width:52px; height:52px;
+    }
+    .wa-float svg { width:24px; height:24px; }
+  }
+
+  /* ── Small phones ── */
+  @media (max-width:400px) {
+    .topbar { padding:7px 12px; }
+    .wa-pill { font-size:.72rem; padding:4px 10px; }
+    .svc-grid { grid-template-columns:1fr; }
+    .slide-title { font-size:1.5rem; }
+    .hero-content { padding:70px 16px 90px; }
+    .hero-tag { font-size:.64rem; }
+    .hero-sub { font-size:.84rem; }
+    .btn-primary, .btn-outline { padding:11px 16px; font-size:.82rem; }
+    section { padding:44px 16px; }
+    .s-title { font-size:1.5rem; }
+    .mvv-card { padding:22px 18px; }
+    .cta-band { padding:40px 16px; }
+    footer { padding:40px 16px 90px; }
+    .cert-row { gap:18px; }
+    .cert-badge { flex:1; min-width:70px; }
+    .cert-badge-icon { width:54px; height:54px; font-size:1.2rem; }
+    .hero-ctas { flex-direction:column; }
+    .btn-primary, .btn-outline { width:100%; justify-content:center; }
+    .recruit p { font-size:.8rem; }
+    .footer-cols-row { grid-template-columns:1fr; }
   }
 </style>
 </head>
@@ -412,12 +673,12 @@
 
 <!-- TOPBAR -->
 <div class="topbar">
-  <a href="mailto:parcerias@solucoesdiferentes.pt">parcerias@solucoesdiferentes.pt</a>
+  <a class="topbar-email" href="mailto:info@solucoesdiferentes.pt">info@solucoesdiferentes.pt</a>
   <a class="wa-pill" href="https://wa.me/351915006353" target="_blank" rel="noopener">
     <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
     915 006 353
   </a>
-  <a href="#contactos">Contactos</a>
+  <a class="topbar-contactos" href="#contactos">Contactos</a>
   <div class="social-icons">
     <a class="soc soc-fb" href="https://www.facebook.com/jose.magalhaes.5" target="_blank" rel="noopener" title="Facebook">
       <svg viewBox="0 0 24 24"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.235 2.686.235v2.97h-1.513c-1.491 0-1.956.93-1.956 1.884v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
@@ -432,6 +693,7 @@
 </div>
 
 <!-- NAV -->
+<div class="nav-overlay" id="navOverlay"></div>
 <nav id="mainNav">
   <a class="nav-logo" href="#">
     <img src="./logo.jpg" alt="Soluções Diferentes Logo">
@@ -440,7 +702,10 @@
       <span>Telecomunicações &amp; Energia</span>
     </div>
   </a>
-  <ul class="nav-links">
+  <button class="hamburger" id="hamburger" aria-label="Abrir Menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links" id="navLinks">
     <li><a href="#quem-somos">Quem Somos</a></li>
     <li><a href="#servicos">Serviços</a></li>
     <li><a href="#insights">Insights</a></li>
@@ -456,7 +721,6 @@
 
 <!-- HERO SLIDESHOW -->
 <div class="hero" id="hero">
-
   <div class="slide slide-1 active">
     <div class="hero-content">
       <div class="hero-tag">🌐 Telecomunicações &amp; Energia</div>
@@ -468,7 +732,6 @@
       </div>
     </div>
   </div>
-
   <div class="slide slide-2">
     <div class="hero-content">
       <div class="hero-tag">☀️ Energia Solar</div>
@@ -476,11 +739,10 @@
       <p class="hero-sub">Instalação e manutenção de painéis fotovoltaicos para particulares e empresas em todo o território nacional.</p>
       <div class="hero-ctas">
         <a class="btn-primary" href="#servicos">Saiba Mais →</a>
-        <a class="btn-outline" href="mailto:parcerias@solucoesdiferentes.pt">Pedir Proposta</a>
+        <a class="btn-outline" href="mailto:info@solucoesdiferentes.pt">Pedir Proposta</a>
       </div>
     </div>
   </div>
-
   <div class="slide slide-3">
     <div class="hero-content">
       <div class="hero-tag">💨 Energia Eólica</div>
@@ -492,7 +754,6 @@
       </div>
     </div>
   </div>
-
   <div class="slide slide-4">
     <div class="hero-content">
       <div class="hero-tag">📞 Contact Center</div>
@@ -504,7 +765,6 @@
       </div>
     </div>
   </div>
-
   <div class="slide slide-5">
     <div class="hero-content">
       <div class="hero-tag">🛰️ Conectividade Total</div>
@@ -517,7 +777,7 @@
     </div>
   </div>
 
-  <!-- Stats bar -->
+  <!-- Stats bar desktop -->
   <div class="hero-stats">
     <div class="stat"><div class="stat-num">+200<span>k</span></div><div class="stat-lbl">Interações mensais</div></div>
     <div class="stat"><div class="stat-num">98<span>%</span></div><div class="stat-lbl">Satisfação de parceiros</div></div>
@@ -541,10 +801,18 @@
   </div>
 </div>
 
+<!-- Stats mobile (below hero) -->
+<div class="hero-stats-mobile" style="display:none;">
+  <div class="stat"><div class="stat-num">+200<span style="color:var(--gold)">k</span></div><div class="stat-lbl">Interações mensais</div></div>
+  <div class="stat"><div class="stat-num">98<span style="color:var(--gold)">%</span></div><div class="stat-lbl">Satisfação</div></div>
+  <div class="stat"><div class="stat-num">+50</div><div class="stat-lbl">Clientes ativos</div></div>
+  <div class="stat"><div class="stat-num">15<span style="color:var(--gold)">+</span></div><div class="stat-lbl">Anos</div></div>
+</div>
+
 <!-- RECRUIT BANNER -->
 <div class="recruit" id="recrutamento">
   <p>🚀 Junte-se a nós! Estamos a recrutar novos talentos em telecomunicações e energia.</p>
-  <a href="mailto:parcerias@solucoesdiferentes.pt">Let's GO!</a>
+  <a href="mailto:recrutamento@solucoesdiferentes.pt">Let's GO!</a>
 </div>
 
 <!-- MVV -->
@@ -590,7 +858,7 @@
       <div class="svc-card reveal"><div class="svc-icon">📞</div><div class="svc-title">Atendimento ao Cliente</div><div class="svc-desc">Atendimento personalizado e consultivo por múltiplos canais para melhorar a experiência do consumidor final.</div></div>
       <div class="svc-card reveal"><div class="svc-icon">☀️</div><div class="svc-title">Energia Solar Fotovoltaica</div><div class="svc-desc">Instalação, manutenção e monitorização de sistemas solares para particulares, empresas e indústria.</div></div>
       <div class="svc-card reveal"><div class="svc-icon">📡</div><div class="svc-title">Telecomunicações</div><div class="svc-desc">Soluções de fibra ótica, internet móvel e voz para clientes residenciais e empresariais.</div></div>
-      <div class="svc-card reveal"><div class="svc-icon">💼</div><div class="svc-title">Vendas Outbound & Inbound</div><div class="svc-desc">Especialistas em operações de vendas estruturadas dentro das diretrizes estratégicas dos clientes.</div></div>
+      <div class="svc-card reveal"><div class="svc-icon">💼</div><div class="svc-title">Vendas Outbound &amp; Inbound</div><div class="svc-desc">Especialistas em operações de vendas estruturadas dentro das diretrizes estratégicas dos clientes.</div></div>
       <div class="svc-card reveal"><div class="svc-icon">💨</div><div class="svc-title">Energia Eólica</div><div class="svc-desc">Consultoria e instalação de soluções eólicas para a transição energética sustentável do seu negócio.</div></div>
       <div class="svc-card reveal"><div class="svc-icon">🛠️</div><div class="svc-title">Suporte Técnico</div><div class="svc-desc">Profissionais certificados para resolução de problemas técnicos com atendimento ágil e eficiente.</div></div>
       <div class="svc-card reveal"><div class="svc-icon">🗂️</div><div class="svc-title">Backoffice</div><div class="svc-desc">Processos administrativos e operacionais que garantem eficiência e rigor na gestão do negócio.</div></div>
@@ -615,7 +883,7 @@
 <!-- CTA -->
 <div class="cta-band" id="contactos">
   <h2>Vamos conversar sobre o seu projeto?</h2>
-  <a href="mailto:parcerias@solucoesdiferentes.pt">Let's GO! →</a>
+  <a href="mailto:info@solucoesdiferentes.pt">Let's GO! →</a>
 </div>
 
 <!-- WHATSAPP FLOAT -->
@@ -633,9 +901,9 @@
       </div>
       <p>Soluções personalizadas de contact center, telecomunicações e energia para o mercado português.</p>
       <div class="footer-contacts">
-        <a href="mailto:parcerias@solucoesdiferentes.pt">
+        <a href="mailto:info@solucoesdiferentes.pt">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 7L2 7"/></svg>
-          parcerias@solucoesdiferentes.pt
+          info@solucoesdiferentes.pt
         </a>
         <a class="wa" href="https://wa.me/351915006353" target="_blank" rel="noopener">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
@@ -654,26 +922,31 @@
         </a>
       </div>
     </div>
-    <div class="f-col">
-      <h4>Empresa</h4>
-      <ul>
-        <li><a href="#quem-somos">Quem Somos</a></li>
-        <li><a href="#servicos">Serviços</a></li>
-        <li><a href="#insights">Insights</a></li>
-        <li><a href="#recrutamento">Recrutamento</a></li>
-        <li><a href="#contactos">Contactos</a></li>
-      </ul>
+
+    <!-- 2-col wrapper on mobile -->
+    <div class="footer-cols-row" style="display:contents;">
+      <div class="f-col">
+        <h4>Empresa</h4>
+        <ul>
+          <li><a href="#quem-somos">Quem Somos</a></li>
+          <li><a href="#servicos">Serviços</a></li>
+          <li><a href="#insights">Insights</a></li>
+          <li><a href="#recrutamento">Recrutamento</a></li>
+          <li><a href="#contactos">Contactos</a></li>
+        </ul>
+      </div>
+      <div class="f-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="#">Política de Privacidade</a></li>
+          <li><a href="#">Política Anti-Corrupção</a></li>
+          <li><a href="#">Código de Conduta</a></li>
+          <li><a href="#">Política de Qualidade</a></li>
+          <li><a href="#">Política de Cookies</a></li>
+        </ul>
+      </div>
     </div>
-    <div class="f-col">
-      <h4>Legal</h4>
-      <ul>
-        <li><a href="#">Política de Privacidade</a></li>
-        <li><a href="#">Política Anti-Corrupção</a></li>
-        <li><a href="#">Código de Conduta</a></li>
-        <li><a href="#">Política de Qualidade</a></li>
-        <li><a href="#">Política de Cookies</a></li>
-      </ul>
-    </div>
+
     <div class="f-col">
       <h4>Área de Parceiros</h4>
       <a class="crm-btn-footer" href="https://v0-crm-web-app-snowy.vercel.app/login" target="_blank" rel="noopener">
@@ -683,17 +956,18 @@
       <p style="font-size:.76rem;color:rgba(255,255,255,.3);margin-top:6px">Área exclusiva para parceiros e colaboradores certificados.</p>
     </div>
   </div>
+
   <div class="footer-bottom">
     <p>© Soluções Diferentes | 2026 — Todos os Direitos Reservados</p>
     <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
       <div style="display:flex;gap:8px;">
-        <a class="fsoc fsoc-fb" href="https://www.facebook.com/jose.magalhaes.5" target="_blank" rel="noopener" title="Facebook" style="width:32px;height:32px;border-radius:7px;">
+        <a class="fsoc fsoc-fb" href="https://www.facebook.com/jose.magalhaes.5" target="_blank" rel="noopener" style="width:32px;height:32px;border-radius:7px;">
           <svg viewBox="0 0 24 24" style="width:15px;height:15px;fill:#fff;"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.235 2.686.235v2.97h-1.513c-1.491 0-1.956.93-1.956 1.884v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
         </a>
-        <a class="fsoc fsoc-ig" href="https://www.instagram.com/stories/jose.magalhaes.35/" target="_blank" rel="noopener" title="Instagram" style="width:32px;height:32px;border-radius:7px;">
+        <a class="fsoc fsoc-ig" href="https://www.instagram.com/stories/jose.magalhaes.35/" target="_blank" rel="noopener" style="width:32px;height:32px;border-radius:7px;">
           <svg viewBox="0 0 24 24" style="width:15px;height:15px;fill:#fff;"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
         </a>
-        <a class="fsoc fsoc-tt" href="https://www.tiktok.com/@josemagalhaes084" target="_blank" rel="noopener" title="TikTok" style="width:32px;height:32px;border-radius:7px;">
+        <a class="fsoc fsoc-tt" href="https://www.tiktok.com/@josemagalhaes084" target="_blank" rel="noopener" style="width:32px;height:32px;border-radius:7px;">
           <svg viewBox="0 0 24 24" style="width:15px;height:15px;fill:#fff;"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.17 8.17 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/></svg>
         </a>
       </div>
@@ -707,6 +981,26 @@
 </footer>
 
 <script>
+  // ── HAMBURGER MENU ──
+  const hamburger = document.getElementById('hamburger');
+  const navLinks  = document.getElementById('navLinks');
+  const overlay   = document.getElementById('navOverlay');
+
+  function toggleMenu(open) {
+    hamburger.classList.toggle('open', open);
+    hamburger.setAttribute('aria-expanded', open);
+    navLinks.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+
+  hamburger.addEventListener('click', () => toggleMenu(!navLinks.classList.contains('open')));
+  overlay.addEventListener('click', () => toggleMenu(false));
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggleMenu(false)));
+
+  // Close on Escape
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') toggleMenu(false); });
+
   // ── SLIDESHOW ──
   const slides = document.querySelectorAll('.slide');
   const dots   = document.querySelectorAll('.dot');
@@ -727,24 +1021,48 @@
   document.getElementById('nextSlide').addEventListener('click', () => { next(); resetTimer(); });
   document.getElementById('prevSlide').addEventListener('click', () => { prev(); resetTimer(); });
   dots.forEach(d => d.addEventListener('click', () => { goTo(+d.dataset.i); resetTimer(); }));
+
+  // Touch swipe on hero
+  let touchStartX = 0;
+  const heroEl = document.getElementById('hero');
+  heroEl.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
+  heroEl.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].screenX - touchStartX;
+    if (Math.abs(dx) > 50) { dx < 0 ? next() : prev(); resetTimer(); }
+  }, { passive: true });
+
   startTimer();
+
+  // ── MOBILE STATS ──
+  const mobileStats = document.querySelector('.hero-stats-mobile');
+  function toggleMobileStats() {
+    if (mobileStats) {
+      mobileStats.style.display = window.innerWidth <= 768 ? 'flex' : 'none';
+    }
+  }
+  toggleMobileStats();
+  window.addEventListener('resize', toggleMobileStats);
 
   // ── REVEAL ON SCROLL ──
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach((e, i) => {
-      if (e.isIntersecting) {
-        setTimeout(() => e.target.classList.add('visible'), i * 80);
-        observer.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.1 });
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.12 });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-  // ── NAV SHADOW ──
-  const nav = document.getElementById('mainNav');
-  window.addEventListener('scroll', () => {
-    nav.style.boxShadow = window.scrollY > 10 ? '0 4px 30px rgba(0,0,0,.13)' : '0 2px 20px rgba(0,0,0,.08)';
-  });
+  // ── FOOTER MOBILE COLS ──
+  function setFooterCols() {
+    const wrapper = document.querySelector('.footer-cols-row');
+    if (!wrapper) return;
+    if (window.innerWidth <= 768) {
+      wrapper.style.display = 'grid';
+      wrapper.style.gridTemplateColumns = window.innerWidth <= 400 ? '1fr' : '1fr 1fr';
+      wrapper.style.gap = '28px';
+    } else {
+      wrapper.style.display = 'contents';
+    }
+  }
+  setFooterCols();
+  window.addEventListener('resize', setFooterCols);
 </script>
 </body>
 </html>
